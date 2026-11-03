@@ -36,6 +36,9 @@
 #include "ui/inputbox.h"
 #include "ui/main.h"
 #include "ui/menu.h"
+#ifdef ENABLE_MESSENGER
+    #include "ui/messenger.h"
+#endif
 #include "ui/scanner.h"
 #include "ui/ui.h"
 #include "../misc.h"
@@ -69,6 +72,9 @@ void (*const UI_DisplayFunctions[])(void) = {
 
 #ifdef ENABLE_FEAT_F4HWN_RXTX_LOG
     [DISPLAY_RXTX_LOG] = &UI_DisplayRxTxLog,
+#endif
+#ifdef ENABLE_MESSENGER
+    [DISPLAY_MSG] = &UI_DisplayMSG,
 #endif
 };
 

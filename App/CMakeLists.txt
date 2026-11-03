@@ -161,6 +161,20 @@ enable_feature(ENABLE_FLASHLIGHT
 enable_feature(ENABLE_SPECTRUM
     app/spectrum.c
 )
+enable_feature(ENABLE_SPECTRUM_K5
+    app/spectrum_k5.c
+)
+enable_feature(ENABLE_MESSENGER
+    app/messenger.c
+    ui/messenger.c
+)
+enable_feature(ENABLE_MESSENGER_DELIVERY_NOTIFICATION)
+enable_feature(ENABLE_MESSENGER_FSK_MUTE)
+enable_feature(ENABLE_MESSENGER_NOTIFICATION)
+enable_feature(ENABLE_ENCRYPTION
+    external/chacha/chacha.c
+    helper/crypto.c
+)
 enable_feature(ENABLE_BIG_FREQ)
 enable_feature(ENABLE_SMALL_BOLD)
 enable_feature(ENABLE_CUSTOM_MENU_LAYOUT)

@@ -66,6 +66,10 @@ static void ACTION_Beam(void);
 static void ACTION_ToneCall(void);
 #endif
 
+#ifdef ENABLE_MESSENGER
+static void ACTION_Messenger(void);
+#endif
+
 #if defined(ENABLE_FMRADIO_EMBEDDED)
 static void ACTION_Scan_FM(bool bRestart);
 #endif
@@ -135,6 +139,9 @@ void (*const action_opt_table[ACTION_OPT_LEN])(void) = {
 #endif
 #ifdef ENABLE_FEAT_F4HWN_OVERLAY_APPS
     [ACTION_OPT_TONECALL] = &ACTION_ToneCall,
+#endif
+#ifdef ENABLE_MESSENGER
+    [ACTION_OPT_MESSENGER] = &ACTION_Messenger,
 #endif
 };
 
@@ -532,6 +539,13 @@ static void ACTION_Beam(void)
 static void ACTION_ToneCall(void)
 {
     ACTION_LaunchApp(APP_SHORTCUT_TONECALL);
+}
+#endif
+
+#ifdef ENABLE_MESSENGER
+static void ACTION_Messenger(void)
+{
+    GUI_SelectNextDisplay(DISPLAY_MSG);
 }
 #endif
 

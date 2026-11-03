@@ -37,6 +37,9 @@ enum GUI_DisplayType_t
 #ifdef ENABLE_FEAT_F4HWN_RXTX_LOG
     DISPLAY_RXTX_LOG,
 #endif
+#ifdef ENABLE_MESSENGER
+    DISPLAY_MSG,
+#endif
 
     DISPLAY_N_ELEM,
     DISPLAY_INVALID = 0xFFu

@@ -27,6 +27,9 @@
     #include "app/beam.h"
 #endif
 #include "app/app.h"
+#ifdef ENABLE_MESSENGER
+    #include "app/messenger.h"
+#endif
 #include "app/chFrScanner.h"
 #include "app/dtmf.h"
 #ifdef ENABLE_FLASHLIGHT
@@ -94,6 +97,11 @@ static bool flagSaveVfo;
 static bool flagSaveSettings;
 static bool flagSaveChannel;
 
+#ifdef ENABLE_MESSENGER
+    bool    gPlayMSGRing      = false;
+    uint8_t gPlayMSGRingCount = 0;
+#endif
+
 #ifdef ENABLE_FEAT_F4HWN_SLEEP
 static KEY_Code_t gSleepWakeKey = KEY_INVALID;
 #endif
@@ -129,6 +137,9 @@ void (*const ProcessKeysFunctions[])(KEY_Code_t Key, bool bKeyPressed, bool bKey
 
 #ifdef ENABLE_FEAT_F4HWN_RXTX_LOG
     [DISPLAY_RXTX_LOG] = &RXTX_LOG_ProcessKeys,
+#endif
+#ifdef ENABLE_MESSENGER
+    [DISPLAY_MSG] = &MSG_ProcessKeys,
 #endif
 };
 

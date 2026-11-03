@@ -23,6 +23,9 @@
 #include "frequencies.h"
 #include <helper/battery.h>
 #include "radio.h"
+#ifdef ENABLE_MESSENGER
+    #include "app/messenger.h"
+#endif
 #include <driver/backlight.h>
 
 /* Shared PY25Q16 locations for the two configurable boot-message lines. */
@@ -135,8 +138,9 @@ enum ACTION_OPT_t {
     ACTION_OPT_FOXHUNT        = 22,
     ACTION_OPT_BEACON         = 23,
     ACTION_OPT_TONECALL       = 24,
+    ACTION_OPT_MESSENGER      = 25,  /* IU2VTM fork: fixed ID, EEPROM-persisted */
 
-    ACTION_OPT_LEN            = 25
+    ACTION_OPT_LEN            = 26
 };
 
 #ifdef ENABLE_VOICE
@@ -299,6 +303,16 @@ typedef struct {
     uint8_t               S0_LEVEL;
     uint8_t               S9_LEVEL;
 #endif
+#ifdef ENABLE_MESSENGER
+    MessengerConfig       MESSENGER_CONFIG;
+    // station callsign auto-prepended to outgoing messages for ID compliance
+    // (6 chars callsign + 2 chars radio id, e.g. "IU2VTM01"); set via CHIRP or
+    // the radio menu, stored at EEPROM 0xA178
+    char                  CALLSIGN[8];
+#endif
+#ifdef ENABLE_ENCRYPTION
+    char                  ENC_KEY[16];
+#endif
 } EEPROM_Config_t;
 
 extern EEPROM_Config_t gEeprom;
@@ -341,6 +355,9 @@ void     SETTINGS_FactoryReset(bool bIsAll);
 #endif
 void SETTINGS_SaveVfoIndices(void);
 void SETTINGS_SaveVfoIndicesFlush(void);
+#ifdef ENABLE_MESSENGER
+void SETTINGS_SaveCallsign(void);
+#endif
 void SETTINGS_SaveSettings(void);
 void SETTINGS_SaveChannelName(uint16_t channel, const char * name);
 void SETTINGS_SaveChannel(uint16_t Channel, uint8_t VFO, const VFO_Info_t *pVFO, uint8_t Mode);

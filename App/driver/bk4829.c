@@ -1915,3 +1915,28 @@ void BK4819_PlayDTMFEx(bool bLocalLoopback, char Code)
 
     BK4819_ExitTxMute();
 }
+
+#ifdef ENABLE_MESSENGER
+/* IU2VTM: FSK TX/RX control and mic mute for the Messenger's own direct
+ * FSK packet framing (kamilsss655 port), separate from the resident DTMF/
+ * CTCSS FSK helpers above. */
+void BK4819_FskClearFifo(void) {
+    const uint16_t fsk_reg59 = BK4819_ReadRegister(BK4819_REG_59);
+    BK4819_WriteRegister(BK4819_REG_59, (1u << 15) | (1u << 14) | fsk_reg59);
+}
+
+void BK4819_FskEnableRx(void) {
+    const uint16_t fsk_reg59 = BK4819_ReadRegister(BK4819_REG_59);
+    BK4819_WriteRegister(BK4819_REG_59, (1u << 12) | fsk_reg59);
+}
+
+void BK4819_FskEnableTx(void) {
+    const uint16_t fsk_reg59 = BK4819_ReadRegister(BK4819_REG_59);
+    BK4819_WriteRegister(BK4819_REG_59, (1u << 11) | fsk_reg59);
+}
+
+void BK4819_MuteMic(void) {
+    const uint16_t reg30 = BK4819_ReadRegister(BK4819_REG_30);
+    BK4819_WriteRegister(BK4819_REG_30, reg30 & ~(1u << 2));
+}
+#endif

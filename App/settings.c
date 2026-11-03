@@ -461,6 +461,19 @@ gEeprom.FreqChannel[1]   = IS_FREQ_CHANNEL(Data16[5]) ? Data16[5] : (FREQ_CHANNE
     // 0F30..0F3F
     PY25Q16_ReadBuffer(0x00A138, gCustomAesKey, sizeof(gCustomAesKey));
     bHasCustomAesKey = false;
+#ifdef ENABLE_ENCRYPTION
+    // Messenger encryption key -- 0xA180, 16 bytes (IU2VTM). Avoids
+    // upstream's own AES challenge-response key at 0xA138 (read, never
+    // written, by their code).
+    PY25Q16_ReadBuffer(0x00A180, gEeprom.ENC_KEY, sizeof(gEeprom.ENC_KEY));
+#endif
+#ifdef ENABLE_MESSENGER
+    // Station callsign auto-prepended to messages for ID -- 0xA178, 8 bytes
+    // (IU2VTM). Upstream's Scan List Mix editor (App/app/menu.c) reads AND
+    // WRITES 0xA170 unconditionally, so staying there would corrupt either
+    // the callsign or the scan-mix mask on first use of either feature.
+    PY25Q16_ReadBuffer(0x00A178, gEeprom.CALLSIGN, sizeof(gEeprom.CALLSIGN));
+#endif
     #ifndef ENABLE_FEAT_F4HWN
         for (unsigned int i = 0; i < ARRAY_SIZE(gCustomAesKey); i++)
         {
@@ -476,6 +489,14 @@ gEeprom.FreqChannel[1]   = IS_FREQ_CHANNEL(Data16[5]) ? Data16[5] : (FREQ_CHANNE
         // 1FF0..0x1FF7
         // TODO: address TBD
         PY25Q16_ReadBuffer(0x00A158, Data, 8);
+#ifdef ENABLE_MESSENGER
+        // byte 3 of the 0xA158 block (IU2VTM): byte 2 belongs to set_lck
+        // (keypad lock scope), bytes 0-1 are legacy build options no longer
+        // written by upstream v6. Reserved bits (3, 6, 7) must be clear: a
+        // non-zero value means the byte is erased/stale, so use the default
+        // (messenger RX on, ACK/encryption off).
+        gEeprom.MESSENGER_CONFIG.__val = ((Data[3] & 0xC8) != 0) ? 0x01 : Data[3];
+#endif
         const uint8_t set_ptt_scn_sav = Data[7] & 0x0F;
         const bool set_ptt_scn_sav_erased = Data[7] == 0xFF;
 #ifdef ENABLE_FEAT_F4HWN_LOGO_SAV
@@ -935,6 +956,15 @@ void SETTINGS_SaveVfoIndicesFlush(void)
     }
 }
 
+#ifdef ENABLE_MESSENGER
+void SETTINGS_SaveCallsign(void)
+{
+    // persist the 8-byte station callsign at EEPROM 0xA178 (sector
+    // read-modify-write keeps the surrounding settings intact)
+    PY25Q16_WriteBuffer(0x00A178, gEeprom.CALLSIGN, sizeof(gEeprom.CALLSIGN), false);
+}
+#endif
+
 void SETTINGS_SaveSettings(void)
 {
     uint8_t *State;
@@ -1161,6 +1191,11 @@ void SETTINGS_SaveSettings(void)
     State = SecBuf;
     // TODO: TBD
     PY25Q16_ReadBuffer(0x00A158, State, 8);
+
+#ifdef ENABLE_MESSENGER
+    // byte 3 (IU2VTM): byte 2 is set_lck, written below
+    State[3] = gEeprom.MESSENGER_CONFIG.__val;
+#endif
 
     //memset(State, 0xFF, sizeof(State));
 

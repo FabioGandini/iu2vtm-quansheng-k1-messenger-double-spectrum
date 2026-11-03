@@ -43,4 +43,9 @@ VFO_Info_t *const *APP_GetFullWatchBackgroundVfos(uint8_t *count);
 uint8_t APP_GetFullWatchScrollPhase(void);
 #endif
 
+#ifdef ENABLE_MESSENGER
+    extern bool    gPlayMSGRing;
+    extern uint8_t gPlayMSGRingCount;
+#endif
+
 #endif

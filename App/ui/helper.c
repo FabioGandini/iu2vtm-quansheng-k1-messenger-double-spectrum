@@ -256,7 +256,9 @@ static void sort(int16_t *a, int16_t *b)
 }
 
 #ifdef ENABLE_FEAT_F4HWN
-    /*
+#ifdef ENABLE_MESSENGER
+    /* IU2VTM: used by the Messenger UI for the dotted separator between the
+     * message list and status area. Was dead/commented-out code here. */
     void UI_DrawLineDottedBuffer(uint8_t (*buffer)[128], int16_t x1, int16_t y1, int16_t x2, int16_t y2, bool black)
     {
         if(x2==x1) {
@@ -276,7 +278,7 @@ static void sort(int16_t *a, int16_t *b)
             }
         }
     }
-    */
+#endif
 
     void PutPixel(uint8_t x, uint8_t y, bool fill) {
       UI_DrawPixelBuffer(gFrameBuffer, x, y, fill);
