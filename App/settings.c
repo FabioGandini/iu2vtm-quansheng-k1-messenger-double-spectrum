@@ -270,7 +270,14 @@ gEeprom.FreqChannel[1]   = IS_FREQ_CHANNEL(Data16[5]) ? Data16[5] : (FREQ_CHANNE
     // 0E90..0E97
     PY25Q16_ReadBuffer(0x00A0A8, Data, 8);
     gEeprom.BEEP_CONTROL                 = Data[0] & 1;
+#ifdef ENABLE_MESSENGER
+    // IU2VTM: default M-long-press to MESSENGER on a fresh/erased radio,
+    // instead of NONE, so the out-of-box experience doesn't need a menu
+    // visit before the messenger is reachable.
+    gEeprom.KEY_M_LONG_PRESS_ACTION      = ((Data[0] >> 1) < ACTION_OPT_LEN) ? (Data[0] >> 1) : ACTION_OPT_MESSENGER;
+#else
     gEeprom.KEY_M_LONG_PRESS_ACTION      = ((Data[0] >> 1) < ACTION_OPT_LEN) ? (Data[0] >> 1) : ACTION_OPT_NONE;
+#endif
     gEeprom.KEY_1_SHORT_PRESS_ACTION     = (Data[1] < ACTION_OPT_LEN) ? Data[1] : ACTION_OPT_MONITOR;
     gEeprom.KEY_1_LONG_PRESS_ACTION      = (Data[2] < ACTION_OPT_LEN) ? Data[2] : ACTION_OPT_NONE;
     gEeprom.KEY_2_SHORT_PRESS_ACTION     = (Data[3] < ACTION_OPT_LEN) ? Data[3] : ACTION_OPT_SCAN;
