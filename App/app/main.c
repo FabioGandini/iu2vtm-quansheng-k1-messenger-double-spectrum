@@ -344,7 +344,7 @@ static void processFKeyFunction(const KEY_Code_t Key, const bool beep)
                 bool isKeyUp = (Key == KEY_UP);
 
                 if (gScanStateDir != SCAN_OFF) {
-                    RADIO_NextValidList(isKeyUp ? 1 : -1);
+                    RADIO_NextValidList(isKeyUp ? -1 : 1);   // IU2VTM: inverted arrow keys
                     UI_MAIN_NotifyScanListChanged();
                 } else {
                     // Adjust squelch: UP increments, DOWN decrements
