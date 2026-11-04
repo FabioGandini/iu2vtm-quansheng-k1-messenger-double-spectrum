@@ -1,4 +1,4 @@
-# IU2VTM firmware for the UV-K1 and UV-K5 V3
+# IU2VTM firmware for QUANSHENG UV-K1 and UV-K5 V3
 
 ##########################################
 
