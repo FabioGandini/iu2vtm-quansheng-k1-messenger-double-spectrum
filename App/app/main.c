@@ -1124,7 +1124,7 @@ void MAIN_ProcessKeys(KEY_Code_t Key, bool bKeyPressed, bool bKeyHeld)
             break;
         case KEY_UP:
         case KEY_DOWN:
-            MAIN_Key_UP_DOWN(bKeyPressed, bKeyHeld, Key == KEY_UP ? 1 : -1);
+            MAIN_Key_UP_DOWN(bKeyPressed, bKeyHeld, Key == KEY_UP ? -1 : 1);   // IU2VTM: inverted arrow keys
             break;
         case KEY_EXIT:
             MAIN_Key_EXIT(bKeyPressed, bKeyHeld);
