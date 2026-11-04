@@ -526,6 +526,16 @@ int MENU_GetLimits(uint8_t menu_id, int32_t *pMin, int32_t *pMax)
             break;
         }
 
+#ifdef ENABLE_MESSENGER
+        case MENU_MSG_RX:
+        case MENU_MSG_ACK:
+#ifdef ENABLE_ENCRYPTION
+        case MENU_MSG_ENC:
+#endif
+            *pMax = 1;
+            break;
+#endif
+
         default:
             return -1;
     }
@@ -980,6 +990,21 @@ void MENU_AcceptSetting(void)
             gRequestSaveChannel       = 1;
             return;
 #endif
+
+#ifdef ENABLE_MESSENGER
+        case MENU_MSG_RX:
+            gEeprom.MESSENGER_CONFIG.data.receive = gSubMenuSelection;
+            MSG_EnableRX(gEeprom.MESSENGER_CONFIG.data.receive);
+            break;
+        case MENU_MSG_ACK:
+            gEeprom.MESSENGER_CONFIG.data.ack = gSubMenuSelection;
+            break;
+#ifdef ENABLE_ENCRYPTION
+        case MENU_MSG_ENC:
+            gEeprom.MESSENGER_CONFIG.data.encrypt = gSubMenuSelection;
+            break;
+#endif
+#endif
     }
 
     gRequestSaveSettings = true;
@@ -1346,6 +1371,20 @@ void MENU_ShowCurrentSetting(void)
         case MENU_TX_LOCK:
             gSubMenuSelection = gTxVfo->TX_LOCK;
             break;
+#endif
+
+#ifdef ENABLE_MESSENGER
+        case MENU_MSG_RX:
+            gSubMenuSelection = gEeprom.MESSENGER_CONFIG.data.receive;
+            break;
+        case MENU_MSG_ACK:
+            gSubMenuSelection = gEeprom.MESSENGER_CONFIG.data.ack;
+            break;
+#ifdef ENABLE_ENCRYPTION
+        case MENU_MSG_ENC:
+            gSubMenuSelection = gEeprom.MESSENGER_CONFIG.data.encrypt;
+            break;
+#endif
 #endif
 
         default:

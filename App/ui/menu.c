@@ -176,6 +176,13 @@ const t_menu_item MenuList[] =
     {"SetCfg",      MENU_SET_CFG       }, // load another settings bank
 #endif
 #endif
+#ifdef ENABLE_MESSENGER
+    {"MsgRX",       MENU_MSG_RX        },
+    {"MsgACK",      MENU_MSG_ACK       },
+#ifdef ENABLE_ENCRYPTION
+    {"MsgEnc",      MENU_MSG_ENC       },
+#endif
+#endif
     // hidden menu items from here on
     // enabled if pressing both the PTT and upper side button at power-on
     {"F Lock",      MENU_F_LOCK        },
@@ -1784,6 +1791,16 @@ void UI_DisplayMenu(void)
                 strcpy(String, gSubMenu_SET_KEY[gSubMenuSelection]);
                 break;                
         #endif
+#endif
+
+#ifdef ENABLE_MESSENGER
+        case MENU_MSG_RX:
+        case MENU_MSG_ACK:
+#ifdef ENABLE_ENCRYPTION
+        case MENU_MSG_ENC:
+#endif
+            choiceTable = gSubMenu_OFF_ON;
+            goto copy_menu_choice;
 #endif
 
         copy_menu_choice:
