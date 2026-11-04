@@ -31,6 +31,37 @@ for the full documentation of that base.
 [Releases](https://github.com/FabioGandini/iu2vtm-uv-k1-k5v3-messenger-double-spectrum/releases)
 page of this fork.
 
+## Using the messenger
+
+Open it with a long press on **MENU** (set that key to MESSENGER from the
+menu if it isn't already). Type with the keypad like an old phone -- press a
+number, tap again to cycle its letters, **\*** switches upper/lower/numbers,
+**F** is backspace.
+
+- **MENU** sends the message.
+- **UP / DOWN** (tap) scrolls the conversation; held **UP** sends a
+  **range-check ping** -- every other IU2VTM radio in earshot answers with
+  its callsign, distance and signal strength.
+- Held **DOWN** opens **callsign editing**: type it, **MENU** saves,
+  **EXIT** cancels. Setting it once means every message you send is
+  auto-signed.
+- A **`+`** next to a sent message means the other radio confirmed receiving
+  it -- turn this on (**MsgACK**), encryption (**MsgEnc**) and whether to
+  receive at all (**MsgRX**) from the main menu.
+- **EXIT** leaves the messenger.
+
+## Using the second spectrum analyzer
+
+Press **F+8** to open it. On a memory channel it scans your saved channels
+instead of a frequency range, so you can see at a glance which ones are
+active right now.
+
+- **KEY 4** switches between scanning every channel and just your current
+  scan list.
+- **MENU** tunes straight to the strongest signal found.
+- **PTT** exits and hands that frequency over to the main VFO, ready to use.
+- **EXIT** leaves without changing anything.
+
 ### IU2VTM-specific credits
 
 Parts of the BK4829 Messenger RX/re-arm strategy and channel-busy handling were
