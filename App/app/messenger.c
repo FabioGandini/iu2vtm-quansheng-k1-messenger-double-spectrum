@@ -494,9 +494,18 @@ void MSG_SendPacket() {
 
 		SYSTEM_DelayMs(50);
 
+		// IU2VTM: APP_EndTransmission() only raises gFlagEndTransmission and
+		// calls RADIO_SendEndOfTransmission() now -- the actual return to RX
+		// (FUNCTION_Select(FUNCTION_FOREGROUND)) and clearing the flag back
+		// to false both happen in APP_HandleEndTransmission(), which the
+		// resident scheduler normally calls on the next tick. Calling only
+		// APP_EndTransmission() plus a manual FUNCTION_Select() (as armel's
+		// older, single-step APP_EndTransmission() used to require) leaves
+		// gFlagEndTransmission stuck true, which is why the radio stayed in
+		// TX. Call the real follow-up directly instead of reimplementing
+		// half of it.
 		APP_EndTransmission();
-		// this must be run after end of TX, otherwise radio will still TX transmit without even RED LED on
-		FUNCTION_Select(FUNCTION_FOREGROUND);
+		APP_HandleEndTransmission();
 
 		RADIO_SetVfoState(VFO_STATE_NORMAL);
 
