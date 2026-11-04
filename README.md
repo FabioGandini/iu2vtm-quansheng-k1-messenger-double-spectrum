@@ -1,3 +1,47 @@
+# IU2VTM firmware for the UV-K1 and UV-K5 V3
+
+This is the **IU2VTM** fork of [armel's F4HWN firmware](https://github.com/armel/uv-k1-k5v3-firmware-custom)
+(Labs edition as a base). It adds a text messenger, a second spectrum analyzer
+and a few other extras on top of the full F4HWN feature set below.
+
+**Download:** grab `iu2vtm.bin` from the
+[Releases](https://github.com/FabioGandini/iu2vtm-uv-k1-k5v3-messenger-double-spectrum/releases)
+page.
+
+## What this fork adds
+
+### ✉️ Messenger — text messages over the air
+
+Send short text messages between two UV-K1/K5 radios on the same frequency,
+like a walkie-talkie that can also text. Type with the keypad (T9, same as an
+old phone), **MENU** sends, **EXIT** closes the messenger. No key is bound to
+it by default — assign it to a side key from the menu (any **F1/F2** short or
+long press, or **M Long**).
+
+- **Delivery confirmation**: a `+` on screen once the other radio has it.
+- **Your callsign on every message**: set once (on the radio or via CHIRP)
+  and it's auto-prepended, so you stay identifiable on the air as required.
+- **Ping / range check**: one button sends a ping, every other IU2VTM radio
+  in range answers with its callsign, an estimated distance and signal
+  strength — a quick way to see who can hear you.
+- **Optional encryption** (ChaCha20) for private experiments off the ham
+  bands, where cleartext isn't a legal requirement.
+
+### 📈 A second spectrum analyzer
+
+On top of F4HWN's own bandscope (**F+5**), this fork adds kamilsss655's
+spectrum analyzer on **F+8**: open it on a memory channel and it scans your
+saved channels instead of a frequency range, showing which ones are active.
+**PTT** jumps straight to the strongest signal.
+
+## Everything else
+
+Everything below this point is armel's own F4HWN documentation — Multiboot,
+overlay apps, scan lists, AirCopy, Broadcast FM, Multiconfig banks and the
+full feature set this fork builds on. It applies here too.
+
+---
+
 # Stats
 
 ![Alt](https://repobeats.axiom.co/api/embed/ecdd86aa536b716f088339a0c5ee734558f78c28.svg "Repobeats analytics image")
