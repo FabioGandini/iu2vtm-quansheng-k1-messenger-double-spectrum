@@ -28,7 +28,7 @@ AirCopy, Broadcast FM, K5Viewer, RF Log and the rest -- see
 for the full documentation of that base.
 
 **Download:** grab the latest `iu2vtm.bin` from the
-[Releases](https://github.com/FabioGandini/iu2vtm-uv-k1-k5v3-messenger-double-spectrum/releases)
+[Releases](https://github.com/FabioGandini/iu2vtm-quansheng-k1-messenger-double-spectrum/releases)
 page of this fork.
 
 ## Using the messenger
