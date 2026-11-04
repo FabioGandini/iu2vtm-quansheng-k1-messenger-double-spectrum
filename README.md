@@ -15,7 +15,8 @@ ALTERNATIVE SPECTRUM (F+8)
 
 This is the **IU2VTM** fork of the [armel/muzkr UV-K1/K5V3 firmware](https://github.com/armel/uv-k1-k5v3-firmware-custom)
 (F4HWN, Labs edition as a base), built around two things stock F4HWN doesn't
-have: a **text messenger** between two radios -- type with the keypad,
+have: a **text messenger** shared by every radio on the same frequency, just
+like a normal conversation on a channel -- type with the keypad,
 callsign auto-ID, delivery confirmation, a one-button range-check ping, and
 optional ChaCha20 encryption for off-band experiments -- and a **second
 spectrum analyzer** (F+8) that scans your saved channels instead of a
